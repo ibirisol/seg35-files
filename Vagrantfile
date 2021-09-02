@@ -1,0 +1,41 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/debian-10"
+  config.vm.box_version = "202107.08.0"
+  config.vm.box_check_update = false
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+# - - - Graylog server - - -
+
+  config.vm.define "graylog" do |graylog|
+    graylog.vm.provider "virtualbox" do |vb|
+      vb.name = "graylog"
+      vb.memory = 4096
+      vb.cpus = 2
+    end
+
+    graylog.vm.hostname = "graylog"
+    graylog.vm.network "private_network", ip: "192.168.68.10"
+#    graylog.vm.provision "file", source: "./graylog_scripts", destination: "~/scripts"
+    graylog.vm.provision "shell", path: "./setup.sh" do |s|
+      s.args = ["graylog"]
+    end
+  end
+
+# - - - Generic Linux server - - -
+
+  config.vm.define "linserver" do |linserver|
+    linserver.vm.provider "virtualbox" do |vb|
+      vb.name = "linserver"
+      vb.memory = 1024
+      vb.cpus = 1
+    end
+
+    linserver.vm.hostname = "linserver"
+    linserver.vm.network "private_network", ip: "192.168.68.11"
+    linserver.vm.provision "file", source: "./linserver_scripts", destination: "~/scripts"
+    linserver.vm.provision "shell", path: "./setup.sh" do |s|
+      s.args = ["linserver"]
+    end
+  end
+
+end
