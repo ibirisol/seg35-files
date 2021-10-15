@@ -11,8 +11,8 @@ if [[ $( ls /home/vagrant/scripts/ | wc -l ) -ne 0 ]] ; then
 fi
 
 apt update
-#apt upgrade -y
-#apt install -y vim
+apt upgrade -y
+apt install -y vim
 
 cat << EOF > /etc/vim/vimrc.local
 set nomodeline
