@@ -1,12 +1,12 @@
 FROM python:3.11-alpine
 
-WORKDIR /app
+WORKDIR /sysload
 
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app.py .
+COPY sysload.py .
 
 EXPOSE 5000
 
-CMD ["python", "app.py"]
+CMD ["python", "sysload.py"]
