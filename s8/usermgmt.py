@@ -3,7 +3,7 @@ import rocksdb
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
-db = rocksdb.DB("userdb", rocksdb.Options(create_if_missing=True))
+db = rocksdb.DB("/data/userdb", rocksdb.Options(create_if_missing=True))
 
 @app.route('/user/<username>')
 def get_user(username):
