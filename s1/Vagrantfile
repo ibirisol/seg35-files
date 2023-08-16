@@ -21,6 +21,23 @@ Vagrant.configure("2") do |config|
     end
   end
 
+# - - - Graylog server 5 - - -
+
+  config.vm.define "graylog5" do |graylog|
+    graylog.vm.provider "virtualbox" do |vb|
+      vb.name = "graylog5"
+      vb.memory = 4096
+      vb.cpus = 2
+    end
+
+    graylog.vm.hostname = "graylog5"
+    graylog.vm.network "private_network", ip: "192.168.68.15"
+#    graylog.vm.provision "file", source: "./graylog_scripts", destination: "~/scripts"
+    graylog.vm.provision "shell", path: "./setup.sh" do |s|
+      s.args = ["graylog"]
+    end
+  end
+
 # - - - Generic Linux server - - -
 
   config.vm.define "linserver" do |linserver|
